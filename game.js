@@ -9,19 +9,30 @@ let arrows = [];
 let monsters = [];
 let archerX = canvas.width / 2;
 let archerY = canvas.height - 80;
+let lastShot = 0; // عشان نعمل فاصل بين الاسهم
 
 function updateUI() {
   document.getElementById('score').innerText = score;
   document.getElementById('lives').innerText = '❤️'.repeat(lives);
 }
 
-// التحكم باللمس
-canvas.addEventListener('touchmove', (e) => {
+function shootArrow() {
+  let now = Date.now();
+  if(now - lastShot > 200) { // يضرب كل 0.2 ثانيه بس عشان ميبقاش سريع اوي
+    arrows.push({x: archerX, y: archerY, speed: 8});
+    lastShot = now;
+  }
+}
+
+// لمسه واحده = حركه + ضرب
+canvas.addEventListener('touchstart', (e) => {
   archerX = e.touches[0].clientX;
+  shootArrow();
 });
 
-canvas.addEventListener('touchstart', (e) => {
-  arrows.push({x: archerX, y: archerY, speed: 8});
+canvas.addEventListener('touchmove', (e) => {
+  archerX = e.touches[0].clientX;
+  shootArrow(); // يضرب وهو بيتحرك
 });
 
 // ينزل وحش كل ثانيتين
@@ -68,7 +79,6 @@ function gameLoop() {
     ctx.arc(m.x, m.y, 20, 0, Math.PI*2);
     ctx.fill();
 
-    // تشيك لو السهم اصاب الوحش
     arrows.forEach((a, j) => {
       if(checkCollision(a, m)) {
         score += 10;
