@@ -1,96 +1,36 @@
-@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap');
-
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
 body {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    color: white;
-    font-family: 'Cairo', sans-serif;
-    min-height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 20px;
+  margin: 0;
+  background: linear-gradient(to bottom, #87CEEB, #32CD32);
+  overflow: hidden;
+  font-family: Arial;
+  touch-action: none;
 }
 
-.container {
-    background: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(20px);
-    border-radius: 30px;
-    padding: 40px 30px;
-    max-width: 700px;
-    width: 100%;
-    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-    border: 1px solid rgba(255,255,255,0.2);
+.game-info {
+  position: absolute;
+  top: 10px;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  padding: 0 20px;
+  font-size: 20px;
+  color: white;
+  text-shadow: 2px 2px 2px black;
+  box-sizing: border-box;
 }
 
-h1 {
-    font-size: 32px;
-    font-weight: 900;
-    margin-bottom: 10px;
-    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+canvas {
+  display: block;
+  width: 100vw;
+  height: 100vh;
 }
 
-p {
-    font-size: 18px;
-    opacity: 0.9;
-    margin-bottom: 30px;
-}
-
-button {
-    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-    color: white;
-    border: none;
-    padding: 18px 40px;
-    font-size: 20px;
-    font-weight: 700;
-    font-family: 'Cairo', sans-serif;
-    border-radius: 50px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: 0 8px 20px rgba(245, 87, 108, 0.4);
-}
-
-button:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 12px 30px rgba(245, 87, 108, 0.6);
-@media (max-width: 600px) {
-  body {
-    padding: 10px;
-  }
-  
-  .game-box {
-    padding: 15px;
-    margin: 10px;
-  }
-
-  h1 {
-    font-size: 20px;
-    line-height: 1.5;
-  }
-
-  h2 {
-    font-size: 16px;
-  }
-
-  h3#timer {
-    font-size: 18px;
-    color: #ff5252;
-    font-weight: bold;
-  }
-
-  .options button {
-    width: 100%;
-    font-size: 16px;
-    padding: 12px;
-    margin: 8px 0;
-  }
-
-  p {
-    font-size: 14px;
-  }
+.hint {
+  position: absolute;
+  bottom: 10px;
+  width: 100%;
+  text-align: center;
+  color: white;
+  font-size: 14px;
+  text-shadow: 1px 1px 2px black;
 }
