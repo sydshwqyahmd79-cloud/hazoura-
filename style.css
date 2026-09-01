@@ -58,4 +58,39 @@ button {
 button:hover {
     transform: translateY(-3px);
     box-shadow: 0 12px 30px rgba(245, 87, 108, 0.6);
+@media (max-width: 600px) {
+  body {
+    padding: 10px;
+  }
+  
+  .game-box {
+    padding: 15px;
+    margin: 10px;
+  }
 
+  h1 {
+    font-size: 20px;
+    line-height: 1.5;
+  }
+
+  h2 {
+    font-size: 16px;
+  }
+
+  h3#timer {
+    font-size: 18px;
+    color: #ff5252;
+    font-weight: bold;
+  }
+
+  .options button {
+    width: 100%;
+    font-size: 16px;
+    padding: 12px;
+    margin: 8px 0;
+  }
+
+  p {
+    font-size: 14px;
+  }
+}
