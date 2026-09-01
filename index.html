@@ -1,53 +1,6 @@
-<!DOCTYPE html>
-<html lang="ar">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>Hazoura Game</title>
-    <style>
-        body {
-            margin: 0;
-            padding: 0;
-            background: black;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            overflow: hidden;
-            touch-action: none; /* عشان ميعملش زووم لما تدوس */
-        }
-        canvas {
-            border: 2px solid white;
-            max-width: 100%;
-            max-height: 100vh;
-        }
-        #controls { 
-            position: absolute; 
-            bottom: 20px; 
-            width: 100%; 
-            display: flex; 
-            justify-content: space-between; 
-            padding: 0 30px; 
-            box-sizing: border-box;
-            z-index: 10;
-        }
-        .btn { 
-            width: 80px; 
-            height: 80px; 
-            background: rgba(255,255,255,0.3); 
-            border: 3px solid white; 
-            border-radius: 50%; 
-            color: white; 
-            font-size: 40px; 
-            font-weight: bold;
-            user-select: none;
-        }
-        .btn:active {
-            background: rgba(255,255,255,0.6); /* بينور لما تدوس */
-        }
-        #shootBtn { 
-            width: 100px; 
-            height: 100px; 
-            background: rgba(255,0,0,0.5); 
-        }
-        #shootBtn:active {
-            background: rgba(255,0,
+<div id="controls">
+    <button class="btn" id="leftBtn">←</button>
+    <button class="btn" id="talkBtn">E</button> <!-- ده الجديد -->
+    <button class="btn" id="shootBtn">🏹</button>
+    <button class="btn" id="rightBtn">→</button>
+</div>
