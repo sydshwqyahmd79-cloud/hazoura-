@@ -1,18 +1,18 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>لعبة Hazoura</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>حماية القلعة</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="container">
-        <h1>مرحبا في لعبة Hazoura</h1>
-        <p>دي اللعبة بتاعتك</p>
-        <button onclick="startGame()">ابدأ اللعب</button>
-        <div class="game-box"></div>
-    </div>
-    <script src="script.js"></script>
+  <div class="game-info">
+    <span>النقاط: <b id="score">0</b></span>
+    <span>القلوب: <b id="lives">❤️❤️❤️</b></span>
+  </div>
+  <canvas id="gameCanvas"></canvas>
+  <p class="hint">اسحب صباعك للتصويب ولمس للضرب 🏹</p>
+  <script src="game.js"></script>
 </body>
 </html>
