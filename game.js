@@ -1,45 +1,50 @@
 const canvas = document.getElementById('game');
 const ctx = canvas.getContext('2d');
-canvas.width = 1200;  // كبرت الشاشة
+canvas.width = 1200;
 canvas.height = 700;
 
 let keys = {};
 let arrows = [];
 let monsters = [];
 let score = 0;
-let particles = []; // عشان دم لما تضرب
+let particles = [];
 
+// الصور
 const background = new Image();
 background.src = 'background.jpg.jpeg'; 
-
 const archerImg = new Image();
 archerImg.src = 'archer.png.jpeg'; 
-
 const monsterImg = new Image();
 monsterImg.src = 'monster.png.jpeg'; 
-
 const arrowImg = new Image();
 arrowImg.src = 'arrow.png'; 
 
-const archer = { x: 100, y: 520, w: 100, h: 130, speed: 6 }; // اكبر واسرع
+const archer = { x: 100, y: 520, w: 100, h: 130, speed: 6 };
 
 function spawnMonster() {
-    let hp = Math.floor(Math.random() * 2) + 1; // الوولف ليه 1 او 2 حياة
+    let hp = Math.floor(Math.random() * 2) + 1;
     monsters.push({ x: 1200, y: 540, w: 100, h: 100, speed: 2.5, hp: hp });
 }
-setInterval(spawnMonster, 1500); // بينزل اسرع
+setInterval(spawnMonster, 1500);
 
+// كمبيوتر
 document.addEventListener('keydown', e => { 
     keys[e.key] = true; 
     if(e.key === ' ') shoot();
 });
 document.addEventListener('keyup', e => { keys[e.key] = false; });
 
+// موبايل - الزراير التاتش
+document.getElementById('leftBtn').addEventListener('touchstart', () => keys['ArrowLeft'] = true);
+document.getElementById('leftBtn').addEventListener('touchend', () => keys['ArrowLeft'] = false);
+document.getElementById('rightBtn').addEventListener('touchstart', () => keys['ArrowRight'] = true);
+document.getElementById('rightBtn').addEventListener('touchend', () => keys['ArrowRight'] = false);
+document.getElementById('shootBtn').addEventListener('touchstart', () => shoot());
+
 function shoot() {
-    arrows.push({ x: archer.x + 90, y: archer.y + 50, w: 50, h: 12, speed: 12 }); // سهم اسرع واطول
+    arrows.push({ x: archer.x + 90, y: archer.y + 50, w: 50, h: 12, speed: 12 });
 }
 
-// مؤثر دم
 function createBlood(x, y) {
     for(let i = 0; i < 10; i++) {
         particles.push({x: x, y: y, vx: Math.random()*4-2, vy: Math.random()*4-2, life: 20})
@@ -57,16 +62,14 @@ function update() {
     arrows = arrows.filter(a => a.x < 1200);
     monsters = monsters.filter(m => m.x > -100);
     
-    // تحديث الدم
     particles.forEach(p => {p.x += p.vx; p.y += p.vy; p.life--;});
     particles = particles.filter(p => p.life > 0);
 
-    // التصادم الواقعي
     arrows.forEach((a, i) => {
         monsters.forEach((m, j) => {
             if (a.x < m.x + m.w && a.x + a.w > m.x && a.y < m.y + m.h && a.y + a.h > m.y) {
-                m.hp--; // ينقص حياة
-                createBlood(m.x + 50, m.y + 50); // دم
+                m.hp--;
+                createBlood(m.x + 50, m.y + 50);
                 arrows.splice(i, 1);
                 if(m.hp <= 0) {
                     monsters.splice(j, 1);
@@ -79,16 +82,11 @@ function update() {
 
 function draw() {
     ctx.drawImage(background, 0, 0, canvas.width, canvas.height);
-    
-    // رسم الدم
     ctx.fillStyle = 'red';
     particles.forEach(p => ctx.fillRect(p.x, p.y, 3, 3));
-    
     ctx.drawImage(archerImg, archer.x, archer.y, archer.w, archer.h);
     arrows.forEach(a => ctx.drawImage(arrowImg, a.x, a.y, a.w, a.h));
     monsters.forEach(m => ctx.drawImage(monsterImg, m.x, m.y, m.w, m.h));
-    
-    // الاسكور بشكل احلى
     ctx.fillStyle = 'white';
     ctx.font = 'bold 36px Arial';
     ctx.strokeStyle = 'black';
