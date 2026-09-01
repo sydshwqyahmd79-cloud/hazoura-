@@ -1,58 +1,71 @@
-const canvas = document.getElementById('gameCanvas');
+const canvas = document.getElementById('game');
 const ctx = canvas.getContext('2d');
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
+canvas.width = 800;
+canvas.height = 600;
 
-let score = 0; let lives = 3; let arrows = []; let monsters = [];
-let archerX = canvas.width / 2; let archerY = canvas.height - 120;
+let keys = {};
+let arrows = [];
+let monsters = [];
+let score = 0;
 
-// حمل الصور
-const archerImg = new Image(); archerImg.src = 'archer.png';
-const monsterImg = new Image(); monsterImg.src = 'monster.png';
-const arrowImg = new Image(); arrowImg.src = 'arrow.png';
-const bgImg = new Image(); bgImg.src = 'background.jpg';
+const background = new Image();
+background.src = 'background.jpg.jpeg'; 
 
-function updateUI() {
-  document.getElementById('score').innerText = score;
-  document.getElementById('lives').innerText = '❤️'.repeat(lives);
+const archerImg = new Image();
+archerImg.src = 'archer.png.jpeg'; 
+
+const monsterImg = new Image();
+monsterImg.src = 'monster.png.jpeg'; 
+
+const arrowImg = new Image();
+arrowImg.src = 'arrow.png.png'; 
+
+const archer = { x: 50, y: 450, w: 60, h: 80 };
+
+function spawnMonster() {
+    monsters.push({ x: 800, y: 450, w: 60, h: 60, speed: 2 });
+}
+setInterval(spawnMonster, 2000);
+
+document.addEventListener('keydown', e => { keys[e.key] = true; });
+document.addEventListener('keyup', e => { keys[e.key] = false; });
+
+function shoot() {
+    arrows.push({ x: archer.x + 50, y: archer.y + 30, w: 30, h: 10, speed: 8 });
 }
 
-// لمسه واحده = حركه + ضرب
-canvas.addEventListener('touchstart', (e) => {
-  archerX = e.touches[0].clientX;
-  arrows.push({x: archerX, y: archerY, speed: 10});
-});
+function update() {
+    if (keys['ArrowRight']) archer.x += 5;
+    if (keys['ArrowLeft']) archer.x -= 5;
+    if (keys[' ']) { shoot(); keys[' '] = false; }
 
-canvas.addEventListener('touchmove', (e) => {
-  archerX = e.touches[0].clientX;
-  arrows.push({x: archerX, y: archerY, speed: 10});
-});
+    arrows.forEach(a => a.x += a.speed);
+    monsters.forEach(m => m.x -= m.speed);
 
-setInterval(() => {
-  monsters.push({ x: Math.random() * canvas.width, y: 0, speed: 2.5 });
-}, 1500);
+    arrows.forEach((a, i) => {
+        monsters.forEach((m, j) => {
+            if (a.x < m.x + m.w && a.x + a.w > m.x && a.y < m.y + m.h && a.y + a.h > m.y) {
+                arrows.splice(i, 1);
+                monsters.splice(j, 1);
+                score++;
+            }
+        });
+    });
+}
+
+function draw() {
+    ctx.drawImage(background, 0, 0, canvas.width, canvas.height);
+    ctx.drawImage(archerImg, archer.x, archer.y, archer.w, archer.h);
+    arrows.forEach(a => ctx.drawImage(arrowImg, a.x, a.y, a.w, a.h));
+    monsters.forEach(m => ctx.drawImage(monsterImg, m.x, m.y, m.w, m.h));
+    ctx.fillStyle = 'white';
+    ctx.font = '24px Arial';
+    ctx.fillText('Score: ' + score, 20, 40);
+}
 
 function gameLoop() {
-  // ارسم الخلفية HD
-  ctx.drawImage(bgImg, 0, 0, canvas.width, canvas.height);
-
-  // ارسم الرامي
-  ctx.drawImage(archerImg, archerX - 25, archerY - 25, 50, 50);
-
-  // الاسهم
-  arrows.forEach((a, i) => {
-    a.y -= a.speed;
-    ctx.drawImage(arrowImg, a.x - 5, a.y, 10, 30);
-    if(a.y < 0) arrows.splice(i,1);
-  });
-
-  // الوحوش
-  monsters.forEach((m, i) => {
-    m.y += m.speed;
-    ctx.drawImage(monsterImg, m.x - 25, m.y, 50, 50);
-  });
-
-  requestAnimationFrame(gameLoop);
+    update();
+    draw();
+    requestAnimationFrame(gameLoop);
 }
-
-bgImg.onload = () => { updateUI(); gameLoop(); }
+gameLoop();
