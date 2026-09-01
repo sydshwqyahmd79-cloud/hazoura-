@@ -1,18 +1,15 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="ar">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-  <title>حماية القلعة</title>
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <title>لعبة النينجا</title>
+    <style>
+        body { margin: 0; background: black; display: flex; justify-content: center; align-items: center; height: 100vh; }
+        canvas { border: 2px solid white; }
+    </style>
 </head>
 <body>
-  <div class="game-info">
-    <span>النقاط: <b id="score">0</b></span>
-    <span>القلوب: <b id="lives">❤️❤️❤️</b></span>
-  </div>
-  <canvas id="gameCanvas"></canvas>
-  <p class="hint">اسحب صباعك للتصويب ولمس للضرب 🏹</p>
-  <script src="game.js"></script>
+    <canvas id="game"></canvas>
+    <script src="game.js"></script>
 </body>
 </html>
